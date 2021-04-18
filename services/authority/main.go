@@ -8,6 +8,7 @@ import (
 
 	"golang.org/x/sys/unix"
 
+	"github.com/mercari/go-conference-2021-spring-office-hour/pkg/logger"
 	"github.com/mercari/go-conference-2021-spring-office-hour/services/authority/grpc"
 )
 
@@ -19,9 +20,20 @@ func run(ctx context.Context) int {
 	ctx, stop := signal.NotifyContext(ctx, unix.SIGTERM, unix.SIGINT)
 	defer stop()
 
+	l, err := logger.New()
+	if err != nil {
+		_, ferr := fmt.Fprintf(os.Stderr, "failed to create logger: %s", err)
+		if ferr != nil {
+			// Unhandleable, something went wrong...
+			panic(fmt.Sprintf("failed to write log:`%s` original error is:`%s`", ferr, err))
+		}
+		return 1
+	}
+	alogger := l.WithName("authority")
+
 	errCh := make(chan error, 1)
 	go func() {
-		errCh <- grpc.Run(ctx, 5000)
+		errCh <- grpc.RunServer(ctx, 5000, alogger.WithName("grpc"))
 	}()
 
 	select {
