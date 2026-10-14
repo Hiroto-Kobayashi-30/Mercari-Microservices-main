@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/110y/run v1.0.1
-	github.com/go-logr/logr v1.2.3
+	github.com/go-logr/logr v1.4.4
 	github.com/go-logr/zapr v1.2.3
 	github.com/google/uuid v1.3.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
@@ -19,7 +19,6 @@ require (
 
 require (
 	cloud.google.com/go v0.65.0 // indirect
-	github.com/bufbuild/connect-go v0.4.0 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.0-20210816181553-5444fa50b93d // indirect
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
